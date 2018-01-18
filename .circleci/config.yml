@@ -3,7 +3,7 @@ version: 2
 jobs:
   electron-linux-arm:
     docker:
-      - image: electronbuilds/electron:0.0.4
+      - image: electronbuilds/electron:0.0.5
         environment:
           TARGET_ARCH: arm
     resource_class: 2xlarge
@@ -96,7 +96,7 @@ jobs:
             fi
   electron-linux-arm64:
     docker:
-      - image: electronbuilds/electron:0.0.4
+      - image: electronbuilds/electron:0.0.5
         environment:
           TARGET_ARCH: arm64
     resource_class: 2xlarge
@@ -189,7 +189,7 @@ jobs:
             fi
   electron-linux-ia32:
     docker:
-      - image: electronbuilds/electron:0.0.4
+      - image: electronbuilds/electron:0.0.5
         environment:
           TARGET_ARCH: ia32
           DISPLAY: ':99.0'
@@ -223,9 +223,11 @@ jobs:
            if [ "$ELECTRON_RELEASE" == "1" ]; then
               echo 'Building Electron for release'
               script/build.py -c R
+              execstack -q ./out/R/electron
            else
               echo 'Building Electron for debug'
               script/build.py -c D
+              execstack -q ./out/D/electron
            fi
       - run:
           name: Create distribution
@@ -273,7 +275,7 @@ jobs:
              fi
   electron-linux-mips64el:
     docker:
-      - image: electronbuilds/electron:0.0.4
+      - image: electronbuilds/electron:0.0.5
         environment:
           TARGET_ARCH: mips64el
     resource_class: xlarge
@@ -331,7 +333,7 @@ jobs:
 
   electron-linux-x64:
     docker:
-      - image: electronbuilds/electron:0.0.4
+      - image: electronbuilds/electron:0.0.5
         environment:
           TARGET_ARCH: x64
           DISPLAY: ':99.0'
@@ -365,9 +367,11 @@ jobs:
            if [ "$ELECTRON_RELEASE" == "1" ]; then
               echo 'Building Electron for release'
               script/build.py -c R
+              execstack -q ./out/R/electron
            else
               echo 'Building Electron for debug'
               script/build.py -c D
+              execstack -q ./out/D/electron
            fi
       - run:
           name: Create distribution
